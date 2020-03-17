@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{{ url_for('static', filename='mycss.css') }}">
+    <title>Kitchen Password</title>
+</head>
+<body {% if status =="ok" %} style="background-color: #43a047;"
+{% elif status =="not_ok" %} style="background-color: #e53935;"
+{% elif status =="default" %} style="background-color: #1976d2"
+{% endif %} >
+    <header>
+<h1>PASSWORD KITCHEN</h1>
+    </header>
+    <div class="main_container">
+<div id="box">
+    <h2>HASH</h2>
+    <form action="/hash" method="POST">
+        <input type="text" title="password" name="password" class="input" {% if password %} value={{password}} {% else %} placeholder="password" {% endif %}><br>
+        <button class="btn">Hash IT!</button><br>
+        <textarea rows="8" cols="21" name ="hash" class="hash">
+                    {% if hashed_pass %}  {{hashed_pass}}
+                    {%else%}{%endif%} </textarea>
+    </form>
+</div>
+<div id="box2">
+    <h2>VERIFY</h2>
+    <form action="/dehash" method="POST">
+        <input type="text" title="password2" name="password2" class="input" placeholder="password"><br><br>
+        <textarea rows="7" cols="21" name ="hash2" class="hash" placeholder="hash"></textarea><br>
+        <button class="btn">Verify IT!</button>
+    </form>
+    {% if status == "ok"%}
+    <p class="green">It's a match</p>
+    {% elif status == "not_ok"%}
+    <p class="red">Doesn't match</p>
+    {%endif%}
+
+</div>
+</div>
+
+
+
+
+
+</body>
+</html>
